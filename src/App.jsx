@@ -1,6 +1,7 @@
 import reactLogo from "./assets/react.svg";
+import { Fragment } from "react";
 
-const MainBody = () => {
+/* const MainBody = () => {
   return (
     <main>
       <img src={reactLogo} alt="react logo" />
@@ -14,10 +15,42 @@ const MainBody = () => {
       </ul>
     </main>
   );
+}; */
+
+const Header = () => {
+  return (
+    <header>
+      <img src={reactLogo} alt="react logo" width="50px" />
+    </header>
+  );
+};
+
+const MainContent = () => {
+  return (
+    <main>
+      <h1>Reasons I'm excited to learn react</h1>
+      <ol>
+        <li>I'll finally be able to call myself a frontend developer</li>
+        <li>I'll be able to get more jobs</li>
+        <li>I'll be able to showcase my skills</li>
+        <li>Other devs won't look down on me</li>
+      </ol>
+    </main>
+  );
+};
+
+const Footer = () => {
+  return <footer>c 20xx Onyebuchi development. All rights reserved.</footer>;
 };
 
 const App = () => {
-  return <MainBody />;
+  return (
+    <>
+      <Header />
+      <MainContent />
+      <Footer />
+    </>
+  );
 };
 
 export default App;
