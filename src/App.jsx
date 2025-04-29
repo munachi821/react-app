@@ -1,7 +1,9 @@
 //import reactLogo from "./assets/react.svg";
-import Header from "./Header";
+/* import Header from "./Header";
 import MainContent from "./Maincontent";
-import Footer from "./footer";
+import Footer from "./footer"; */
+import Main from "./Components/Main";
+import Navbar from "./Components/Navbar";
 
 /* const MainBody = () => {
   return (
@@ -21,9 +23,8 @@ import Footer from "./footer";
 const App = () => {
   return (
     <>
-      <Header />
-      <MainContent />
-      <Footer />
+      <Navbar />
+      <Main />
     </>
   );
 };
