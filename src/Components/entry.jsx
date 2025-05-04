@@ -1,11 +1,11 @@
-import mountfujiimg from "../images/mount fuji.jpg";
-const entry = () => {
+//import mountfujiimg from "../images/mount fuji.jpg";
+const entry = (props) => {
   return (
     <div className="flex items-center pl-8 pt-8 w-[1000px]">
       <div className="bg-red-600 rounded-lg w-[208px] h-[180px] overflow-hidden">
         <img
-          src={mountfujiimg}
-          alt="mount fuji"
+          src={props.img.src}
+          alt={props.img.alt}
           className="w-full h-full object-cover"
         />
       </div>
