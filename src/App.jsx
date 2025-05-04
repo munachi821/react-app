@@ -1,4 +1,5 @@
 //import Main from "./Components/Main";
+import Joke from "./Components/joke";
 import Header from "./Components/Header";
 import Entry from "./Components/entry";
 import Contact from "./Components/contact cat";
@@ -30,6 +31,23 @@ const App = () => {
           email="diebubeye9@email.com"
         />
       </div>
+      <Joke Punchline="I can't wait to see her face light up when she opens it" />
+      <Joke
+        Setup="How did the hacker escape the police"
+        Punchline="He just ransomware"
+      />
+      <Joke
+        Setup="Why don't pirates travel on mountain roads?"
+        Punchline="Scurvy"
+      />
+      <Joke
+        Setup="Why do bees stay in the hive in the winter?"
+        Punchline="Swarm"
+      />
+      <Joke
+        Setup="What's the best thing about swizerland?"
+        Punchline="I don't know, but the flag is a big plus!"
+      />
     </>
   );
 };
