@@ -1,14 +1,15 @@
 //import Main from "./Components/Main";
-import Header from "./Components/Header";
-import Entry from "./Components/entry";
-//import mountfujiimg from "./images/mount fuji.jpg";
 import JokesData from "./jokesData";
 import Joke from "./Components/joke";
+import Header from "./Components/Header";
+import Entry from "./Components/entry";
+import mountfujiimg from "./images/mount fuji.jpg";
 
 const App = () => {
   const jokesElement = JokesData.map((joke) => {
     return <Joke Setup={joke.setup} Punchline={joke.punchline} />;
   });
+
   return (
     <>
       <div>{jokesElement}</div>
