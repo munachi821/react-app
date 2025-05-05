@@ -12,21 +12,17 @@ const entry = (props) => {
       <div className="ml-4">
         <ul>
           <li className="mb-2">
-            JAPAN{" "}
+            {props.country + " "}
             <span className="hover:underline transition text-gray-400 cursor-pointer">
               View on Google Maps
             </span>
           </li>
 
-          <h1 className="text-2xl font-bold mb-4">Mount Fuji</h1>
+          <h1 className="text-2xl font-bold mb-4">{props.title}</h1>
 
-          <li className="font-medium mb-2">12 jan, 2025 - 24 jan, 2025</li>
+          <li className="font-medium mb-2">{props.date}</li>
 
-          <p className="text-lg">
-            Mount Fuji is the tallest mountain in japan, standing at 3,776
-            meters(12,380 feet), Mount Fuji is the single most popular tourist
-            site in Japan, for both japanese and foreign tourists
-          </p>
+          <p className="text-lg">{props.text}</p>
         </ul>
       </div>
     </div>
