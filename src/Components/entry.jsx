@@ -2,10 +2,10 @@
 const entry = (props) => {
   return (
     <div className="flex items-center pl-8 pt-8 w-[1000px]">
-      <div className="bg-red-600 rounded-lg w-[208px] h-[180px] overflow-hidden">
+      <div className="bg-red-600 rounded-lg min-w-[100px] min-h-[180px] overflow-hidden">
         <img
-          src={props.img.src}
-          alt={props.img.alt}
+          src={props.src}
+          alt={props.alt}
           className="w-full h-full object-cover"
         />
       </div>
