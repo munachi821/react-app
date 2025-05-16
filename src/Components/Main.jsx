@@ -1,22 +1,21 @@
 import React from "react";
 const main = () => {
-  const [Ingredients, setIngredients] = React.useState([]);
+  const [ingredients, setIngredients] = React.useState([]);
 
-  const items = Ingredients.map((ingredient) => {
+  const items = ingredients.map((ingredient) => {
     return <li key={ingredient}>{ingredient}</li>;
   });
 
-  function handleform(e) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  function addIngrigients(formData) {
     const newIngredient = formData.get("ingredient");
+    const radioInfo = formData.get("employmentStatus");
+    console.log(radioInfo);
     setIngredients((prevIngredient) => [...prevIngredient, newIngredient]);
-    console.log(Ingredients);
   }
 
   return (
     <div className="w-fit mx-auto mt-[50px] text-[14px]">
-      <form action="#" className="flex items-center" onSubmit={handleform}>
+      <form action={addIngrigients} className="flex items-center">
         <input
           type="text"
           placeholder="e.g. oregano"
