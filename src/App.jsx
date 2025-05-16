@@ -2,12 +2,11 @@ import Header from "./Components/Header";
 import Main from "./Components/Main";
 import "./Components/index.css";
 const App = () => {
-  function handleSubmit(event) {
-    event.preventDefault();
-    const formEl = event.currentTarget;
-    const formData = new FormData(formEl);
+  function signUp(formData) {
     const email = formData.get("email");
-    formEl.reset();
+    const password = formData.get("password");
+    console.log(email);
+    console.log(password);
   }
   return (
     <>
@@ -15,7 +14,7 @@ const App = () => {
       <Main /> */}
       <section>
         <h1>Signup Form</h1>
-        <form method="post" onSubmit={handleSubmit}>
+        <form action={signUp}>
           <label htmlFor="email">Email: </label>
           <input
             type="email"
