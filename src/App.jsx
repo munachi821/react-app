@@ -12,32 +12,19 @@ const App = () => {
 export default App;
  */
 
-/* import Joke from "./Components/Joke";
-import jokesData from "./Components/jokesData";
+import { useState } from "react";
+import padsData from "./Components/pads";
+import "./Components/index.css";
+import Pad from "./Components/Pad";
 
 export default function App() {
-  const jokeElements = jokesData.map((joke) => {
-    return <Joke key={joke.id} setup={joke.setup} punchline={joke.punchline} />;
-  });
-  return <div>{jokeElements}</div>;
-}
- */
-
-import React from "react";
-export default function App() {
-  const [messages, setMessages] = React.useState(["a", "b"]);
-  function checkMessages() {
-    if (messages.length === 0) {
-      return "You're all caught up!";
-    } else if (messages.length === 1) {
-      return "You have 1 unread message";
-    } else if (messages.length > 1) {
-      return `You have ${messages.length} unread messages`;
-    }
-  }
+  const [pads, setPads] = useState(padsData);
+  const buttonElements = pads.map((pad) => (
+    <Pad keys={pad.id} color={pad.color} ison={pad.on} />
+  ));
   return (
-    <div>
-      <h1>{checkMessages()}</h1>
-    </div>
+    <main>
+      <div className="pad-container">{buttonElements}</div>
+    </main>
   );
 }
