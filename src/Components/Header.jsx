@@ -1,4 +1,4 @@
-/* import chefClaude from "../assets/chef claude.png";
+import chefClaude from "../assets/chef claude.png";
 const Header = () => {
   return (
     <nav className="bg-[#FFFFFF] flex items-center justify-center space-x-3 font-[Inter] p-4 shadow-sm">
@@ -9,4 +9,3 @@ const Header = () => {
 };
 
 export default Header;
- */
