@@ -45,5 +45,3 @@ const Main = () => {
 };
 
 export default Main;
-
-/* API_KEY = "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" */
