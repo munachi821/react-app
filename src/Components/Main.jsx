@@ -1,36 +1,72 @@
-export default function Main() {
-    /**
-     * Challenge: move the hardcoded meme info into React
-     * state. Use an object with `topText`, `bottomText`,
-     * and `imageUrl` properties, and set the initial values to
-     * the ones hardcoded below.
-     */
-    
-    return (
-        <main>
-            <div className="form">
-                <label>Top Text
-                    <input
-                        type="text"
-                        placeholder="One does not simply"
-                        name="topText"
-                    />
-                </label>
+import { useEffect, useState } from "react";
 
-                <label>Bottom Text
-                    <input
-                        type="text"
-                        placeholder="Walk into Mordor"
-                        name="bottomText"
-                    />
-                </label>
-                <button>Get a new meme image 🖼</button>
-            </div>
-            <div className="meme">
-                <img src="http://i.imgflip.com/1bij.jpg" />
-                <span className="top">One does not simply</span>
-                <span className="bottom">Walk into Mordor</span>
-            </div>
-        </main>
-    )
+export default function Main() {
+  const [meme, setMeme] = useState({
+    topText: "One does not simply",
+    bottomText: "work into modor",
+    imageUrl: "http://i.imgflip.com/1bij.jpg",
+  });
+
+  function handleChange(e) {
+    const { value, name } = e.target;
+    setMeme((memeText) => ({
+      ...memeText,
+      [name]: value,
+    }));
+  }
+
+  const [starWarsData, setStarWarsData] = useState(null);
+  const [count, setCount] = useState(0);
+
+  useEffect(
+    function () {
+      console.log("effect ran");
+    },
+    [count]
+  );
+
+  fetch("https://swapi.dev/api/people/1")
+    .then((res) => res.json())
+    .then((data) => setStarWarsData(data));
+
+  /* console.log(starWarsData); */
+  return (
+    <main>
+      <div className="form">
+        <label>
+          Top Text
+          <input
+            type="text"
+            onChange={handleChange}
+            placeholder="One does not simply"
+            name="topText"
+            value={meme.topText}
+          />
+        </label>
+
+        <label>
+          Bottom Text
+          <input
+            type="text"
+            placeholder="Walk into Mordor"
+            name="bottomText"
+            onChange={handleChange}
+            value={meme.bottomText}
+          />
+        </label>
+        <button>Get a new meme image 🖼</button>
+      </div>
+      <div className="meme">
+        <img src={meme.imageUrl} />
+        <span className="top">{meme.topText}</span>
+        <span className="bottom">{meme.bottomText}</span>
+      </div>
+      <div>
+        <pre>{JSON.stringify(starWarsData, null, 2)}</pre>
+      </div>
+      <button onClick={() => setCount((prevCount) => prevCount + 1)}>
+        {count}
+      </button>
+    </main>
+  );
 }
