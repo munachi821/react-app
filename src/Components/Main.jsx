@@ -15,21 +15,6 @@ export default function Main() {
     }));
   }
 
-  const [starWarsData, setStarWarsData] = useState(null);
-  const [count, setCount] = useState(0);
-
-  useEffect(
-    function () {
-      console.log("effect ran");
-    },
-    [count]
-  );
-
-  fetch("https://swapi.dev/api/people/1")
-    .then((res) => res.json())
-    .then((data) => setStarWarsData(data));
-
-  /* console.log(starWarsData); */
   return (
     <main>
       <div className="form">
@@ -61,12 +46,6 @@ export default function Main() {
         <span className="top">{meme.topText}</span>
         <span className="bottom">{meme.bottomText}</span>
       </div>
-      <div>
-        <pre>{JSON.stringify(starWarsData, null, 2)}</pre>
-      </div>
-      <button onClick={() => setCount((prevCount) => prevCount + 1)}>
-        {count}
-      </button>
     </main>
   );
 }
