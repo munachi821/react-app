@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function Main() {
-  /* const [meme, setMeme] = useState({
+  const [meme, setMeme] = useState({
     topText: "One does not simply",
     bottomText: "work into modor",
     imageUrl: "http://i.imgflip.com/1bij.jpg",
@@ -21,20 +21,19 @@ export default function Main() {
       .then((res) => res.json())
       .then((data) => setImgFlipArray(data.data.memes));
   }, []);
-  const randomImg = Math.floor(Math.random() * imgflipArray.length);
-  console.log(randomImg); */
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    function resizeWindow() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener("resize", resizeWindow);
-  });
+  function getRandomImg() {
+    const randomImgNo = Math.floor(Math.random() * imgflipArray.length);
+    const randomImg = imgflipArray[randomImgNo].url;
+    setMeme((prevMeme) => ({
+      ...prevMeme,
+      imageUrl: randomImg,
+    }));
+  }
 
   return (
     <main>
-      {/* <div className="form">
+      <div className="form">
         <label>
           Top Text
           <input
@@ -56,14 +55,13 @@ export default function Main() {
             value={meme.bottomText}
           />
         </label>
-        <button>Get a new meme image 🖼</button>
+        <button onClick={getRandomImg}>Get a new meme image 🖼</button>
       </div>
       <div className="meme">
         <img src={meme.imageUrl} />
         <span className="top">{meme.topText}</span>
         <span className="bottom">{meme.bottomText}</span>
-      </div> */}
-      <h1>{windowWidth + "px"}</h1>
+      </div>
     </main>
   );
 }
