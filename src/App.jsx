@@ -1,12 +1,15 @@
-import Header from "./Components/Header";
-import Main from "./Components/Main";
 import "./App.css";
+import Die from "./Components/Die";
 const App = () => {
   return (
-    <>
-      <Header />
-      <Main />
-    </>
+    <main>
+      <Die value={1} />
+      <Die value={1} />
+      <Die value={1} />
+      <Die value={1} />
+      <Die value={1} />
+      <Die value={1} />
+    </main>
   );
 };
 
