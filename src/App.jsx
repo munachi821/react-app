@@ -4,6 +4,10 @@ import Die from "./Components/Die";
 import { nanoid } from "nanoid";
 const App = () => {
   const [dice, setDice] = useState(generateAllNewDice());
+  let gamewon =
+    dice.every((die) => die.isHeld) &&
+    dice.every((die) => die.value === dice[0].value);
+
   function generateAllNewDice() {
     return new Array(10).fill(0).map(() => ({
       value: Math.ceil(Math.random() * 6),
@@ -48,7 +52,7 @@ const App = () => {
           className="bg-[#5035ff] text-white px-11 py-2.5 rounded-md mt-6 cursor-pointer"
           onClick={() => rollDice()}
         >
-          Roll
+          {gamewon ? "New Game" : "Roll"}
         </button>
       </div>
     </main>
