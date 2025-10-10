@@ -2,8 +2,9 @@ import { useState } from "react";
 import "./App.css";
 import Die from "./Components/Die";
 import { nanoid } from "nanoid";
+import ReactConfetti from "react-confetti";
 const App = () => {
-  const [dice, setDice] = useState(generateAllNewDice());
+  const [dice, setDice] = useState(() => generateAllNewDice());
   let gamewon =
     dice.every((die) => die.isHeld) &&
     dice.every((die) => die.value === dice[0].value);
@@ -17,13 +18,17 @@ const App = () => {
   }
 
   function rollDice() {
-    setDice((oldDice) =>
-      oldDice.map((dice) =>
-        dice.isHeld === true
-          ? dice
-          : { ...dice, value: Math.ceil(Math.random() * 6) }
-      )
-    );
+    if (!gamewon) {
+      setDice((oldDice) =>
+        oldDice.map((dice) =>
+          dice.isHeld === true
+            ? dice
+            : { ...dice, value: Math.ceil(Math.random() * 6) }
+        )
+      );
+    } else {
+      setDice(generateAllNewDice());
+    }
   }
 
   function hold(id) {
@@ -37,6 +42,7 @@ const App = () => {
   //const diceElements = dice.map((num) => <Die value={num} />);
   return (
     <main className="bg-black flex items-center justify-center h-screen p-4">
+      {gamewon && <ReactConfetti />}
       <div className="bg-[#f5f5f5] w-full h-full rounded-xl flex items-center justify-center flex-col">
         <div className="grid grid-cols-5 mx-auto gap-7">
           {dice.map((num) => (
@@ -50,7 +56,7 @@ const App = () => {
         </div>
         <button
           className="bg-[#5035ff] text-white px-11 py-2.5 rounded-md mt-6 cursor-pointer"
-          onClick={() => rollDice()}
+          onClick={rollDice}
         >
           {gamewon ? "New Game" : "Roll"}
         </button>
