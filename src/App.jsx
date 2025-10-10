@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Die from "./Components/Die";
 import { nanoid } from "nanoid";
@@ -16,6 +16,13 @@ const App = () => {
       id: nanoid(),
     }));
   }
+
+  const buttonRef = useRef(null);
+  useEffect(() => {
+    if (gamewon) {
+      buttonRef.current.focus();
+    }
+  }, [gamewon]);
 
   function rollDice() {
     if (!gamewon) {
@@ -57,6 +64,7 @@ const App = () => {
         <button
           className="bg-[#5035ff] text-white px-11 py-2.5 rounded-md mt-6 cursor-pointer"
           onClick={rollDice}
+          ref={buttonRef}
         >
           {gamewon ? "New Game" : "Roll"}
         </button>
