@@ -1,32 +1,45 @@
 import { useState } from "react";
 import "./App.css";
 import Die from "./Components/Die";
+import { nanoid } from "nanoid";
 const App = () => {
-  const [tennumbers, setTenNumbers] = useState(generateAllNewDice());
+  const [dice, setDice] = useState(generateAllNewDice());
   function generateAllNewDice() {
-    let randomNum = new Array(10)
-      .fill(0)
-      .map(() => Math.ceil(Math.random() * 6));
-
-    let objNum = randomNum.map((num) => ({
-      value: num,
+    return new Array(10).fill(0).map(() => ({
+      value: Math.ceil(Math.random() * 6),
       isHeld: false,
+      id: nanoid(),
     }));
-    return objNum;
   }
 
   function rollDice() {
-    setTenNumbers(generateAllNewDice());
-    console.log(tennumbers);
+    setDice((oldDice) =>
+      oldDice.map((die) =>
+        die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) }
+      )
+    );
   }
 
-  //const diceElements = tennumbers.map((num) => <Die value={num} />);
+  function hold(id) {
+    setDice((oldDice) =>
+      oldDice.map((die) =>
+        die.id === id ? { ...die, isHeld: !die.isHeld } : die
+      )
+    );
+  }
+
+  //const diceElements = dice.map((num) => <Die value={num} />);
   return (
     <main className="bg-black flex items-center justify-center h-screen p-4">
       <div className="bg-[#f5f5f5] w-full h-full rounded-xl flex items-center justify-center flex-col">
         <div className="grid grid-cols-5 mx-auto gap-7">
-          {tennumbers.map((num) => (
-            <Die value={num.value} />
+          {dice.map((num) => (
+            <Die
+              key={num.id}
+              value={num.value}
+              isHeld={num.isHeld}
+              hold={() => hold(num.id)}
+            />
           ))}
         </div>
         <button
