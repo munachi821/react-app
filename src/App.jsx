@@ -14,16 +14,18 @@ const App = () => {
 
   function rollDice() {
     setDice((oldDice) =>
-      oldDice.map((die) =>
-        die.isHeld ? die : { ...die, value: Math.ceil(Math.random() * 6) }
+      oldDice.map((dice) =>
+        dice.isHeld === true
+          ? dice
+          : { ...dice, value: Math.ceil(Math.random() * 6) }
       )
     );
   }
 
   function hold(id) {
     setDice((oldDice) =>
-      oldDice.map((die) =>
-        die.id === id ? { ...die, isHeld: !die.isHeld } : die
+      oldDice.map((dice) =>
+        dice.id === id ? { ...dice, isHeld: !dice.isHeld } : dice
       )
     );
   }
