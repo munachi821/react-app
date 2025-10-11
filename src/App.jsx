@@ -43,14 +43,17 @@ const AssemblyEndgame = () => {
         ))}
       </div>
       <div className="flex gap-0.5 items-center justify-center my-4">
-        {currentWord.split("").map((word, index) => (
-          <span
-            key={index}
-            className="p-2 border-b border-b-[#ffffff] bg-[#323232]"
-          >
-            {word.toUpperCase()}
-          </span>
-        ))}
+        {currentWord.split("").map((word, index) => {
+          const isShowing = guessedLetters.includes(word) ? word : "";
+          return (
+            <span
+              key={index}
+              className="w-[26px] h-[41px] border-b border-b-[#ffffff] bg-[#323232] flex items-center justify-center"
+            >
+              {isShowing.toUpperCase()}
+            </span>
+          );
+        })}
       </div>
       <div className="max-w-xl mx-auto flex flex-wrap justify-center gap-2 place">
         {alphabet.split("").map((letter) => {
