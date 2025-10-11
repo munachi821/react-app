@@ -4,11 +4,15 @@ import { languages } from "./languages.js";
 const AssemblyEndgame = () => {
   //const [gameStatus, setGameStatus] = useState("Game won");
   const [currentWord, setCurrentWord] = useState("react");
+  const [guessedLetters, setGuessedLetters] = useState([]);
+  function getLetter(letter) {
+    setGuessedLetters((prevLetters) =>
+      prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
+    );
+  }
+  console.log(guessedLetters);
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-  const currentWordArr = () => {
-    return currentWord.split("");
-  };
   return (
     <main>
       <header className="text-center mb-4">
@@ -39,7 +43,7 @@ const AssemblyEndgame = () => {
         ))}
       </div>
       <div className="flex gap-0.5 items-center justify-center my-4">
-        {currentWordArr().map((word, index) => (
+        {currentWord.split("").map((word, index) => (
           <span
             key={index}
             className="p-2 border-b border-b-[#ffffff] bg-[#323232]"
@@ -49,14 +53,29 @@ const AssemblyEndgame = () => {
         ))}
       </div>
       <div className="max-w-xl mx-auto flex flex-wrap justify-center gap-2 place">
-        {alphabet.split("").map((letters) => (
-          <button
-            key={letters}
-            className="px-3 py-2 rounded-sm bg-[#fcba29] border border-[#d7d7d7] text-black cursor-pointer w-12 h-12"
-          >
-            {letters.toUpperCase()}
-          </button>
-        ))}
+        {alphabet.split("").map((letter) => {
+          const isGuessed = guessedLetters.includes(letter);
+          const isCorrect = isGuessed && currentWord.includes(letter);
+          const isWrong = isGuessed && !currentWord.includes(letter);
+
+          const checkingCorrect = () => {
+            if (isCorrect) {
+              return "bg-green-600";
+            } else if (isWrong) {
+              return "bg-red-500";
+            }
+          };
+
+          return (
+            <button
+              key={letter}
+              className={`px-3 py-2 rounded-sm bg-[#fcba29] border border-[#d7d7d7] text-black cursor-pointer w-12 h-12 ${checkingCorrect()}`}
+              onClick={() => getLetter(letter)}
+            >
+              {letter.toUpperCase()}
+            </button>
+          );
+        })}
       </div>
       <button className="bg-sky-400 w-48 mx-auto text-black font-medium cursor-pointer rounded-sm h-10 mt-5 flex items-center justify-center border border-[#d7d7d7]">
         New Game
