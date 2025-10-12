@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { languages } from "./languages.js";
+import { getFarewellText } from "./utils.js";
 
 const AssemblyEndgame = () => {
   const [currentWord, setCurrentWord] = useState("react");
   const [guessedLetters, setGuessedLetters] = useState([]);
+  const [fareWell, setFareWell] = useState("");
   function getLetter(letter) {
     setGuessedLetters((prevLetters) =>
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
@@ -18,10 +20,13 @@ const AssemblyEndgame = () => {
   const isGameWon = currentWord
     .split("")
     .every((letter) => guessedLetters.includes(letter));
-
-  //console.log(guessedLetters.join(""), isGameWon);
+  const isGameOver = isGameLost || isGameWon;
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
+  const isLastGuessIncorrect =
+    lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
+  console.log(isLastGuessIncorrect);
 
   return (
     <main>
@@ -37,8 +42,18 @@ const AssemblyEndgame = () => {
       <section
         className={`${isGameWon && "bg-[#10A95B]"} ${
           isGameLost && "bg-red-500"
+        } ${
+          !isGameOver && isLastGuessIncorrect && "bg-[#7a5ea7]"
         } flex items-center justify-center h-14.5 rounded-md`}
       >
+        {!isGameOver && isLastGuessIncorrect && (
+          <div className="flex items-center flex-col">
+            {/* purple-bg [#7a5ea7] */}
+            <h1 className="font-semibold text-lg text-white">
+              {getFarewellText(languages[wrongGuessCount - 1].name)}
+            </h1>
+          </div>
+        )}
         {isGameWon && (
           <div className="flex items-center flex-col">
             <h1 className="font-semibold text-lg mb-1.5 text-white">
