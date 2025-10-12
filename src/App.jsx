@@ -2,7 +2,6 @@ import { useState } from "react";
 import { languages } from "./languages.js";
 
 const AssemblyEndgame = () => {
-  //const [gameStatus, setGameStatus] = useState("Game won");
   const [currentWord, setCurrentWord] = useState("react");
   const [guessedLetters, setGuessedLetters] = useState([]);
   function getLetter(letter) {
@@ -10,7 +9,18 @@ const AssemblyEndgame = () => {
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
     );
   }
-  console.log(guessedLetters);
+
+  const wrongGuessCount = guessedLetters.filter(
+    (incorrectLetter) => !currentWord.includes(incorrectLetter)
+  ).length;
+
+  const isGameLost = wrongGuessCount >= languages.length - 1;
+  const isGameWon = currentWord
+    .split("")
+    .every((letter) => guessedLetters.includes(letter));
+
+  //console.log(guessedLetters.join(""), isGameWon);
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
   return (
@@ -24,23 +34,46 @@ const AssemblyEndgame = () => {
           from Assembly
         </p>
       </header>
-      <section className="bg-[#10A95B] flex items-center justify-between h-fit flex-col">
-        <h1 className="font-semibold text-lg mb-1.5 text-white">You win!</h1>
-        <h2 className="font-medium">Well done</h2>
+      <section
+        className={`${isGameWon && "bg-[#10A95B]"} ${
+          isGameLost && "bg-red-500"
+        } flex items-center justify-center h-14.5 rounded-md`}
+      >
+        {isGameWon && (
+          <div className="flex items-center flex-col">
+            <h1 className="font-semibold text-lg mb-1.5 text-white">
+              You win!
+            </h1>
+            <h2 className="font-medium">Well done</h2>
+          </div>
+        )}
+        {isGameLost && (
+          <div className="flex items-center flex-col">
+            <h1 className="font-semibold text-lg mb-1.5 text-white">
+              You Lose!
+            </h1>
+            <h2 className="font-medium">
+              You fool, Better start learning Assembly
+            </h2>
+          </div>
+        )}
       </section>
       <div className="max-w-[350px] justify-center flex-wrap mx-auto flex mt-4 gap-1.5">
-        {languages.map((language) => (
-          <p
-            key={language.name}
-            className="p-1 rounded-xs"
-            style={{
-              backgroundColor: language.backgroundColor,
-              color: language.color,
-            }}
-          >
-            {language.name}
-          </p>
-        ))}
+        {languages.map((language, index) => {
+          const isLanguageLost = index < wrongGuessCount;
+          return (
+            <p
+              key={language.name}
+              className={`p-1 relative rounded-xs ${isLanguageLost && "lost"}`}
+              style={{
+                backgroundColor: language.backgroundColor,
+                color: language.color,
+              }}
+            >
+              {language.name}
+            </p>
+          );
+        })}
       </div>
       <div className="flex gap-0.5 items-center justify-center my-4">
         {currentWord.split("").map((word, index) => {
@@ -80,9 +113,12 @@ const AssemblyEndgame = () => {
           );
         })}
       </div>
-      <button className="bg-sky-400 w-48 mx-auto text-black font-medium cursor-pointer rounded-sm h-10 mt-5 flex items-center justify-center border border-[#d7d7d7]">
-        New Game
-      </button>
+      {isGameLost ||
+        (isGameWon && (
+          <button className="bg-sky-400 w-48 mx-auto text-black font-medium cursor-pointer rounded-sm h-10 mt-5 flex items-center justify-center border border-[#d7d7d7]">
+            New Game
+          </button>
+        ))}
     </main>
   );
 };
