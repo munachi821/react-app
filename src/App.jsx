@@ -25,6 +25,10 @@ const AssemblyEndgame = () => {
   const isLastGuessIncorrect =
     lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
 
+  function startNewGame() {
+    setCurrentWord(generateNewWord());
+    setGuessedLetters([]);
+  }
   return (
     <main>
       <header className="text-center mb-4">
@@ -149,12 +153,14 @@ const AssemblyEndgame = () => {
           );
         })}
       </div>
-      {isGameLost ||
-        (isGameWon && (
-          <button className="bg-sky-400 w-48 mx-auto text-black font-medium cursor-pointer rounded-sm h-10 mt-5 flex items-center justify-center border border-[#d7d7d7]">
-            New Game
-          </button>
-        ))}
+      {isGameOver && (
+        <button
+          className="bg-sky-400 w-48 mx-auto text-black font-medium cursor-pointer rounded-sm h-10 mt-5 flex items-center justify-center border border-[#d7d7d7]"
+          onClick={startNewGame}
+        >
+          New Game
+        </button>
+      )}
     </main>
   );
 };
