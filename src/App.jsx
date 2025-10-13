@@ -95,11 +95,17 @@ const AssemblyEndgame = () => {
       </div>
       <div className="flex gap-0.5 items-center justify-center my-4">
         {currentWord.split("").map((word, index) => {
-          const isShowing = guessedLetters.includes(word) ? word : "";
+          const isShowing = isGameLost
+            ? word
+            : guessedLetters.includes(word)
+            ? word
+            : "";
+          const showLetter =
+            isGameLost && !guessedLetters.includes(word) && "text-red-500";
           return (
             <span
               key={index}
-              className="w-[26px] h-[41px] border-b border-b-[#ffffff] bg-[#323232] flex items-center justify-center"
+              className={`w-[26px] h-[41px] border-b border-b-[#ffffff] bg-[#323232] flex items-center justify-center ${showLetter}`}
             >
               {isShowing.toUpperCase()}
             </span>
