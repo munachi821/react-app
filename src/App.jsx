@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { languages } from "./languages.js";
-import { getFarewellText } from "./utils.js";
+import { languages } from "./languages";
+import { getFarewellText, generateNewWord } from "./utils";
 
 const AssemblyEndgame = () => {
-  const [currentWord, setCurrentWord] = useState("react");
+  const [currentWord, setCurrentWord] = useState(() => generateNewWord());
   const [guessedLetters, setGuessedLetters] = useState([]);
   function getLetter(letter) {
     setGuessedLetters((prevLetters) =>
@@ -116,10 +116,9 @@ const AssemblyEndgame = () => {
           {currentWord
             .split("")
             .map((letter) =>
-              guessedLetters.includes(letter)
-                ? letter + "."
-                : "blank.".join(" ")
-            )}
+              guessedLetters.includes(letter) ? letter + "." : "blank."
+            )
+            .join(" ")}
         </p>
       </div>
       <div className="max-w-xl mx-auto flex flex-wrap justify-center gap-2 place">
