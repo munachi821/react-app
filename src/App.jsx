@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { languages } from "./languages";
 import { getFarewellText, generateNewWord } from "./utils";
+import ReactConfetti from "react-confetti";
 
 const AssemblyEndgame = () => {
   const [currentWord, setCurrentWord] = useState(() => generateNewWord());
@@ -31,6 +32,7 @@ const AssemblyEndgame = () => {
   }
   return (
     <main>
+      {isGameWon && <ReactConfetti recycle={false} numberOfPieces={900} />}
       <header className="text-center mb-4">
         <h2 className="text-lg font-semibold mb-2 text-white">
           Assembly: Endgame
