@@ -5,28 +5,25 @@ import { getFarewellText } from "./utils.js";
 const AssemblyEndgame = () => {
   const [currentWord, setCurrentWord] = useState("react");
   const [guessedLetters, setGuessedLetters] = useState([]);
-  const [fareWell, setFareWell] = useState("");
   function getLetter(letter) {
     setGuessedLetters((prevLetters) =>
       prevLetters.includes(letter) ? prevLetters : [...prevLetters, letter]
     );
   }
 
+  const numGuessesLeft = languages.length - 1;
   const wrongGuessCount = guessedLetters.filter(
     (incorrectLetter) => !currentWord.includes(incorrectLetter)
   ).length;
-
-  const isGameLost = wrongGuessCount >= languages.length - 1;
+  const isGameLost = wrongGuessCount >= numGuessesLeft;
   const isGameWon = currentWord
     .split("")
     .every((letter) => guessedLetters.includes(letter));
   const isGameOver = isGameLost || isGameWon;
-
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
   const isLastGuessIncorrect =
     lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
-  console.log(isLastGuessIncorrect);
 
   return (
     <main>
@@ -45,6 +42,8 @@ const AssemblyEndgame = () => {
         } ${
           !isGameOver && isLastGuessIncorrect && "bg-[#7a5ea7]"
         } flex items-center justify-center h-14.5 rounded-md`}
+        aria-live="polite"
+        role="status"
       >
         {!isGameOver && isLastGuessIncorrect && (
           <div className="flex items-center flex-col">
@@ -103,6 +102,26 @@ const AssemblyEndgame = () => {
           );
         })}
       </div>
+
+      {/* for the visually impaired */}
+      <div className="sr-only" aria-label="polite" role="status">
+        <p>
+          {currentWord.includes(lastGuessedLetter)
+            ? `Correct! The letter ${lastGuessedLetter} is in the word`
+            : `Sorry, the letter ${lastGuessedLetter} is not in the word`}
+          you have {numGuessesLeft} left
+        </p>
+        <p>
+          Current word:{" "}
+          {currentWord
+            .split("")
+            .map((letter) =>
+              guessedLetters.includes(letter)
+                ? letter + "."
+                : "blank.".join(" ")
+            )}
+        </p>
+      </div>
       <div className="max-w-xl mx-auto flex flex-wrap justify-center gap-2 place">
         {alphabet.split("").map((letter) => {
           const isGuessed = guessedLetters.includes(letter);
@@ -120,8 +139,11 @@ const AssemblyEndgame = () => {
           return (
             <button
               key={letter}
-              className={`px-3 py-2 rounded-sm bg-[#fcba29] border border-[#d7d7d7] text-black cursor-pointer w-12 h-12 ${checkingCorrect()}`}
+              className={`px-3 py-2 rounded-sm bg-[#fcba29] border border-[#d7d7d7] text-black cursor-pointer w-12 h-12 ${checkingCorrect()} disabled:cursor-not-allowed disabled:opacity-[0.5]`}
               onClick={() => getLetter(letter)}
+              disabled={isGameOver}
+              aria-disabled={guessedLetters.includes(letter)}
+              aria-label={`Letter ${letter}`}
             >
               {letter.toUpperCase()}
             </button>
